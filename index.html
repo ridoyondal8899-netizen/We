@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WB Result</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background: #f2f2f2;
+    }
+    .box {
+      background: white;
+      padding: 20px;
+      width: 370px;
+      margin: 30px auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px gray;
+    }
+    input {
+      width: 90%;
+      padding: 8px;
+      margin: 5px;
+    }
+    table {
+      width: 100%;
+      margin-top: 10px;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid #ccc;
+    }
+    th {
+      background: #333;
+      color: white;
+    }
+    .blue {
+      background: #1e6ba8;
+      color: white;
+      padding: 8px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    #captchaBox {
+      font-weight: bold;
+      font-size: 18px;
+      letter-spacing: 3px;
+      background: #eee;
+      display: inline-block;
+      padding: 6px 12px;
+      margin: 5px;
+      border-radius: 5px;
+    }
+    .note {
+      font-size: 13px;
+      color: #555;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="box">
+  <h3>WB Student Result</h3>
+
+  <input type="text" id="roll" placeholder="Enter Roll No"><br>
+  <input type="text" id="reg" placeholder="Enter Number"><br>
+
+  <!-- DOB -->
+  <input type="text" id="dob"
+  placeholder="YYYY-MM-DD"
+  pattern="\d{4}-\d{2}-\d{2}"
+  title="Enter DOB in format YYYY-MM-DD (e.g. 2010-03-10)"
+  required><br>
+
+  <!-- CAPTCHA -->
+  <div id="captchaBox"></div><br>
+
+  <p class="note">
+    Enter CAPTCHA with spaces between characters (e.g., A B C 1 2)
+  </p>
+
+  <button onclick="generateCaptcha()">Refresh</button><br>
+
+  <input type="text" id="captchaInput" placeholder="Enter Captcha"><br>
+
+  <button onclick="checkResult()">Submit</button>
+
+  <div id="result"></div>
+</div>
+
+<script>
+  // CAPTCHA
+  function generateCaptcha() {
+    let chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789@#$";
+    let captcha = "";
+
+    for (let i = 0; i < 6; i++) {
+      captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+
+    document.getElementById("captchaBox").innerText = captcha;
+    window.currentCaptcha = captcha;
+  }
+
+  window.onload = function() {
+    generateCaptcha();
+  };
+
+  // DATABASE
+  const students = [
+    {
+      roll: "10271N",
+      reg: "0052",
+      dob: "2010-03-10",
+      name: "Soumya Deep Mondal",
+      marks: [
+        ["Bengali", 62, 10, 72, "A"],
+        ["English", 51, 10, 61, "A"],
+        ["Math", 46, 10, 56, "B+"],
+        ["Phy. Sc.", 42, 10, 52, "B+"],
+        ["Life Sc.", 52, 10, 62, "A"],
+        ["History", 48, 10, 58, "B+"],
+        ["Geog.", 38, 10, 48, "B+"]
+      ],
+      totalWritten: 339,
+      totalProj: 70,
+      total: 409,
+      grade: "B",
+      remarks: "PASS"
+    }
+  ];
+
+  function checkResult() {
+    let roll = document.getElementById("roll").value;
+    let reg = document.getElementById("reg").value;
+    let dob = document.getElementById("dob").value;
+    let captcha = document.getElementById("captchaInput").value;
+
+    // DOB validation
+    let dobPattern = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dobPattern.test(dob)) {
+      alert("Enter DOB in correct format (YYYY-MM-DD)");
+      return;
+    }
+
+    // CAPTCHA check (space ignore)
+    let cleanInput = captcha.replace(/\s/g, "");
+    if (cleanInput !== window.currentCaptcha) {
+      alert("Wrong captcha");
+      generateCaptcha();
+      return;
+    }
+
+    let student = students.find(s =>
+      s.roll === roll && s.reg === reg && s.dob === dob
+    );
+
+    if (!student) {
+      document.getElementById("result").innerHTML = "Result not found";
+      return;
+    }
+
+    let html = `<h4>${student.name}</h4>`;
+
+    // MARKS TABLE
+    html += `<table>
+      <tr>
+        <th>Subject</th>
+        <th>Written</th>
+        <th>Proj.</th>
+        <th>Total</th>
+        <th>Grade</th>
+      </tr>`;
+
+    student.marks.forEach(m => {
+      html += `<tr>
+        <td>${m[0]}</td>
+        <td>${m[1]}</td>
+        <td>${m[2]}</td>
+        <td>${m[3]}</td>
+        <td>${m[4]}</td>
+      </tr>`;
+    });
+
+    html += `<tr>
+      <th>TOTAL</th>
+      <th>${student.totalWritten}</th>
+      <th>${student.totalProj}</th>
+      <th>${student.total}</th>
+      <th>${student.grade}</th>
+    </tr>`;
+
+    html += `</table>`;
+
+    // FINAL RESULT
+    html += `<div class="blue">FINAL RESULT</div>
+    <table>
+      <tr>
+        <td><b>Aggregate</b></td>
+        <td>${student.total}</td>
+      </tr>
+      <tr>
+        <td><b>Overall Grade</b></td>
+        <td>${student.grade}</td>
+      </tr>
+      <tr>
+        <td><b>Remarks</b></td>
+        <td>${student.remarks}</td>
+      </tr>
+    </table>`;
+
+    document.getElementById("result").innerHTML = html;
+  }
+</script>
+
+</body>
+</html>
