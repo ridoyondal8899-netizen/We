@@ -1,130 +1,150 @@
-  <!DOCTYPE html>
-<html>
+      <!DOCTYPE html>
+<html lang="en">
+
 <head>
-  <title>WB Result 2026</title>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body{
-      font-family:Arial;
-      background:#f2f2f2;
-      text-align:center;
-      padding:20px;
-    }
+<title>WB Result 2026</title>
 
-    .box{
-      background:white;
-      max-width:700px;
-      margin:auto;
-      padding:20px;
-      border-radius:10px;
-      box-shadow:0 0 10px rgba(0,0,0,0.2);
-    }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-    input{
-      width:90%;
-      padding:10px;
-      margin:8px;
-      border:1px solid #ccc;
-      border-radius:5px;
-    }
+<style>
 
-    button{
-      padding:10px 20px;
-      background:#0066cc;
-      color:white;
-      border:none;
-      border-radius:5px;
-      cursor:pointer;
-      margin-top:10px;
-    }
+body{
+  font-family:Arial,sans-serif;
+  background:#f2f2f2;
+  text-align:center;
+  margin:0;
+  padding:10px;
+}
 
-    button:hover{
-      background:#004999;
-    }
+.box{
+  background:white;
+  width:95%;
+  max-width:700px;
+  margin:auto;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
 
-    table{
-      width:100%;
-      border-collapse:collapse;
-      margin-top:15px;
-    }
+h2{
+  color:#0b5ed7;
+}
 
-    table,th,td{
-      border:1px solid black;
-    }
+input{
+  width:95%;
+  padding:14px;
+  margin-top:10px;
+  border:1px solid #ccc;
+  border-radius:6px;
+  font-size:16px;
+  box-sizing:border-box;
+}
 
-    th,td{
-      padding:8px;
-      text-align:center;
-    }
+button{
+  width:95%;
+  padding:14px;
+  background:#0066cc;
+  color:white;
+  border:none;
+  border-radius:6px;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:12px;
+}
 
-    .blue{
-      background:#0b5ed7;
-      color:white;
-      padding:10px;
-      margin-top:15px;
-      font-weight:bold;
-    }
+button:hover{
+  background:#004999;
+}
 
-    #captchaBox{
-      font-size:22px;
-      font-weight:bold;
-      letter-spacing:3px;
-      background:#eee;
-      padding:10px;
-      display:inline-block;
-      margin-top:10px;
-    }
-  </style>
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+}
+
+table,th,td{
+  border:1px solid black;
+}
+
+th{
+  background:#0b5ed7;
+  color:white;
+}
+
+th,td{
+  padding:10px;
+  text-align:center;
+}
+
+.blue{
+  background:#0b5ed7;
+  color:white;
+  padding:10px;
+  margin-top:15px;
+  font-weight:bold;
+}
+
+#captchaBox{
+  font-size:28px;
+  font-weight:bold;
+  background:#eeeeee;
+  padding:12px;
+  margin-top:15px;
+  border-radius:6px;
+  letter-spacing:4px;
+}
+
+#result{
+  margin-top:20px;
+}
+
+</style>
+
 </head>
 
 <body>
 
 <div class="box">
 
-  <h2>WEST BENGAL BOARD RESULT 2026</h2>
+<h2>WEST BENGAL BOARD RESULT 2026</h2>
 
-  <p>
-    Enter DOB in this format:<br>
-    <b>2000-00-00</b>
-  </p>
+<p>
+Enter DOB in this format:<br>
+<b>2000-00-00</b>
+</p>
 
-  <input type="text" id="roll" placeholder="Enter Roll Number">
+<input type="text" id="roll" placeholder="Enter Roll Number">
 
-  <input type="text" id="reg" placeholder="Enter Registration Number">
+<input type="text" id="reg" placeholder="Enter Second Roll Number">
 
-  <input type="text" id="dob" placeholder="YYYY-MM-DD">
+<input type="text" id="dob" placeholder="YYYY-MM-DD">
 
-  <div id="captchaBox"></div>
+<div id="captchaBox"></div>
 
-  <br>
+<input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
 
-  <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
+<button onclick="checkResult()">Submit</button>
 
-  <br>
+<button onclick="downloadPDF()">Download PDF</button>
 
-  <button onclick="checkResult()">Submit</button>
-
-  <button onclick="downloadPDF()">Download PDF</button>
-
-  <div id="result"></div>
+<div id="result"></div>
 
 </div>
 
 <script>
 
 function generateCaptcha(){
-  let chars="ABCDEFGHJKLMNP23456789";
-  let captcha="";
 
-  for(let i=0;i<6;i++){
-    captcha+=chars[Math.floor(Math.random()*chars.length)];
-  }
+  let num=Math.floor(1000 + Math.random()*9000);
 
-  window.currentCaptcha=captcha;
+  window.currentCaptcha=num.toString();
 
-  document.getElementById("captchaBox").innerText=captcha;
+  document.getElementById("captchaBox").innerText=
+  window.currentCaptcha;
 }
 
 generateCaptcha();
@@ -134,8 +154,8 @@ const students=[
 {
   roll:"104271N",
   reg:"0058",
-  dob:"10-3-2010",
-  name:"Soumya deep Mondal",
+  dob:"2010-03-10",
+  name:"Soumya Deep Mondal",
 
   marks:[
     ["First Lang",62,10,72,"A"],
@@ -155,16 +175,9 @@ const students=[
 },
 
 {
-  roll:"104271N",
-  reg:"0058",
-  dob:"13-11-2009",
-  name:"Mrinmoy chakraborty",
-
-  marks:[
-    {
-  roll:"104271N",
-  reg:"0058",
-  dob:"13-11-2009",
+  roll:"104272N",
+  reg:"0059",
+  dob:"2009-11-13",
   name:"Mrinmoy Chakraborty",
 
   marks:[
@@ -182,10 +195,8 @@ const students=[
   total:356,
   grade:"B+",
   remarks:"PASS"
-    }
-  
+}
 
-  
 ];
 
 function checkResult(){
@@ -199,7 +210,7 @@ function checkResult(){
   let captcha=document.getElementById("captchaInput").value.trim();
 
   if(!/^\d{4}-\d{2}-\d{2}$/.test(dob)){
-    alert("Wrong DOB format");
+    alert("Wrong DOB Format");
     return;
   }
 
@@ -216,8 +227,12 @@ function checkResult(){
   );
 
   if(!student){
+
     document.getElementById("result").innerHTML=
     "<h3>Result Not Found</h3>";
+
+    generateCaptcha();
+
     return;
   }
 
@@ -228,19 +243,23 @@ function checkResult(){
   html+=`<h3>${student.name}</h3>`;
 
   html+=`
+
   <table>
+
     <tr>
       <th>Subject</th>
-      <th>W</th>
-      <th>P</th>
+      <th>Written</th>
+      <th>Project</th>
       <th>Total</th>
       <th>Grade</th>
     </tr>
+
   `;
 
   student.marks.forEach(m=>{
 
     html+=`
+
     <tr>
       <td>${m[0]}</td>
       <td>${m[1]}</td>
@@ -248,6 +267,7 @@ function checkResult(){
       <td>${m[3]}</td>
       <td>${m[4]}</td>
     </tr>
+
     `;
   });
 
@@ -292,6 +312,8 @@ function checkResult(){
   `;
 
   document.getElementById("result").innerHTML=html;
+
+  generateCaptcha();
 }
 
 function downloadPDF(){
@@ -299,7 +321,7 @@ function downloadPDF(){
   let element=document.getElementById("pdfArea");
 
   if(!element){
-    alert("First generate result");
+    alert("First Generate Result");
     return;
   }
 
