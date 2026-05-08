@@ -1,4 +1,4 @@
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -157,18 +157,6 @@ const students=[
   dob:"2010-03-10",
   name:"Soumya Deep Mondal",
 
-  marks:[
-    ["First Lang",62,10,72,"A"],
-    ["Second Lang",51,10,61,"A"],
-    ["Math",46,10,56,"B+"],
-    ["Physical Sci.",42,10,52,"B+"],
-    ["Life Sci.",52,10,62,"A"],
-    ["History",48,10,58,"B+"],
-    ["Geog.",38,10,48,"B+"]
-  ],
-
-  totalWritten:339,
-  totalProj:70,
   total:409,
   grade:"B",
   remarks:"PASS"
@@ -180,18 +168,6 @@ const students=[
   dob:"2009-11-13",
   name:"Mrinmoy Chakraborty",
 
-  marks:[
-    ["Bengali",40,10,50,"B+"],
-    ["English",53,10,63,"A"],
-    ["Math",32,10,42,"B"],
-    ["Physical Sci.",40,10,50,"B+"],
-    ["Life Sci.",38,10,48,"B+"],
-    ["History",39,10,49,"B+"],
-    ["Geog.",37,10,47,"B+"]
-  ],
-
-  totalWritten:279,
-  totalProj:70,
   total:349,
   grade:"B+",
   remarks:"PASS"
@@ -244,37 +220,6 @@ function checkResult(){
 
   html+=`
 
-  <table>
-
-    <tr>
-      <th>Subject</th>
-      <th>Written</th>
-      
-      <th>Total</th>
-      <th>Grade</th>
-    </tr>
-
-  `;
-
-  student.marks.forEach(m=>{
-
-    html+=`
-
-    <tr>
-      <td>${m[0]}</td>
-      <td>${m[1]}</td>
-      <td>${m[2]}</td>
-      <td>${m[3]}</td>
-      <td>${m[4]}</td>
-    </tr>
-
-    `;
-  });
-
-  html+=`</table>`;
-
-  html+=`
-
   <div class="blue">
     FINAL RESULT
   </div>
@@ -282,33 +227,21 @@ function checkResult(){
   <table>
 
     <tr>
-      <td>Total Written</td>
-      <td>${student.totalWritten}</td>
+      <th>Total Marks</th>
+      <th>Grade</th>
+      <th>Remarks</th>
     </tr>
 
     <tr>
-      <td>Project Marks</td>
-      <td>${student.totalProj}</td>
-    </tr>
-
-    <tr>
-      <td>Grand Total</td>
       <td>${student.total}</td>
-    </tr>
-
-    <tr>
-      <td>Grade</td>
       <td>${student.grade}</td>
-    </tr>
-
-    <tr>
-      <td>Remarks</td>
       <td>${student.remarks}</td>
     </tr>
 
   </table>
 
   </div>
+
   `;
 
   document.getElementById("result").innerHTML=html;
