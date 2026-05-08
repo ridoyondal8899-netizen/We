@@ -157,6 +157,16 @@ const students=[
   dob:"2010-03-10",
   name:"Soumya Deep Mondal",
 
+  marks:[
+    ["First Lang",72,"A"],
+    ["Second Lang",61,"A"],
+    ["Math",56,"B+"],
+    ["Physical Sci.",52,"B+"],
+    ["Life Sci.",62,"A"],
+    ["History",58,"B+"],
+    ["Geog.",48,"B+"]
+  ],
+
   total:409,
   grade:"B",
   remarks:"PASS"
@@ -167,6 +177,16 @@ const students=[
   reg:"0058",
   dob:"2009-11-13",
   name:"Mrinmoy Chakraborty",
+
+  marks:[
+    ["Bengali",50,"B+"],
+    ["English",63,"A"],
+    ["Math",42,"B"],
+    ["Physical Sci.",50,"B+"],
+    ["Life Sci.",48,"B+"],
+    ["History",49,"B+"],
+    ["Geog.",47,"B+"]
+  ],
 
   total:349,
   grade:"B+",
@@ -217,6 +237,33 @@ function checkResult(){
   html+=`<h2>WEST BENGAL BOARD RESULT</h2>`;
 
   html+=`<h3>${student.name}</h3>`;
+
+  html+=`
+
+  <table>
+
+    <tr>
+      <th>Subject</th>
+      <th>Marks</th>
+      <th>Grade</th>
+    </tr>
+
+  `;
+
+  student.marks.forEach(m=>{
+
+    html+=`
+
+    <tr>
+      <td>${m[0]}</td>
+      <td>${m[1]}</td>
+      <td>${m[2]}</td>
+    </tr>
+
+    `;
+  });
+
+  html+=`</table>`;
 
   html+=`
 
